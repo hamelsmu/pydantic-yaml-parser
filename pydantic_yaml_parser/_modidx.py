@@ -10,5 +10,5 @@ d = { 'settings': { 'branch': 'main',
                                            'pydantic_yaml_parser.yaml.YamlModel': ('yaml.html#yamlmodel', 'pydantic_yaml_parser/yaml.py'),
                                            'pydantic_yaml_parser.yaml.YamlModel.from_dict': ( 'yaml.html#yamlmodel.from_dict',
                                                                                               'pydantic_yaml_parser/yaml.py'),
-                                           'pydantic_yaml_parser.yaml.fmt': ('yaml.html#fmt', 'pydantic_yaml_parser/yaml.py'),
+                                           'pydantic_yaml_parser.yaml._fmt': ('yaml.html#_fmt', 'pydantic_yaml_parser/yaml.py'),
                                            'pydantic_yaml_parser.yaml.yaml2d': ('yaml.html#yaml2d', 'pydantic_yaml_parser/yaml.py')}}}

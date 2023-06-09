@@ -106,3 +106,8 @@ Test.from_dict(yaml_dict_error)
 
     ValueError: Configuration error(s) for YAML:
      - value is not a valid list: `sublist` for element 0 in the list for `setting_2`
+
+## Further Reading
+
+For more examples of error validation see [these
+docs](00_yaml.ipynb#error-validation).
