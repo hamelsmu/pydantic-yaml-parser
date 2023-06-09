@@ -16,8 +16,10 @@ pip install pydantic_yaml_parser
 
 ## Background & Usage
 
+### 1. Loading YAML into Pydantic models
+
 To load YAML into a Pydantic model, you have to first convert the YAML
-to a dict. For example, given the below yaml file:
+string to a dict. For example, given the below yaml file:
 
 ``` python
 yaml_string="""
@@ -46,7 +48,7 @@ class Test(BaseModel):
 ```
 
 You can load the yaml file into a dict, and into the Pydantic model like
-so:
+so using [pyyaml](https://pyyaml.org/wiki/PyYAMLDocumentation):
 
 ``` python
 import yaml
@@ -57,6 +59,8 @@ Test.parse_obj(yml_dict)
 ```
 
     Test(setting_1='Hello', setting_2=[Setting2(kind='name', sublist=['first', 'second'])])
+
+### 2. The Pydantic validation error message
 
 However, let’s say there is an error in your yaml file such that you
 accidentally set `sublist` to `false`, instead of setting `sublist` to
@@ -81,8 +85,12 @@ Test.parse_obj(yaml_dict_error)
       value is not a valid list (type=type_error.list)
 
 This error message is a bit confusing, especially for those with no
-prior experience with pydantic! However when you use
-`pydantic_yaml_parser` you get something a bit clearer:
+prior experience with pydantic!
+
+### 3. Human readable error messages with `pydantic_yaml_parser`
+
+When you use `pydantic_yaml_parser` you get an error message that is
+much clearer:
 
 ``` python
 from pydantic_yaml_parser.yaml import YamlModel
