@@ -3,14 +3,14 @@
 # %% auto 0
 __all__ = ['fmt', 'yaml2d', 'Section', 'YamlModel', 'QuartoDoc']
 
-# %% ../nbs/00_yaml.ipynb 3
+# %% ../nbs/00_yaml.ipynb 2
 import sys
 from pydantic import BaseModel, ValidationError
 import yaml
 from typing import List, Dict
 from fastcore.test import test_fail
 
-# %% ../nbs/00_yaml.ipynb 5
+# %% ../nbs/00_yaml.ipynb 4
 def fmt(err:dict):
     "format error messages from pydantic."
     msg = ""
@@ -29,12 +29,12 @@ def fmt(err:dict):
         msg += str(err['msg'])
     return msg
 
-# %% ../nbs/00_yaml.ipynb 6
+# %% ../nbs/00_yaml.ipynb 5
 def yaml2d(yml:str) -> dict:
     "Turn a yaml string into a dict"
     return yaml.safe_load(yml)
 
-# %% ../nbs/00_yaml.ipynb 7
+# %% ../nbs/00_yaml.ipynb 6
 class Section(BaseModel):
     title: str
     desc: str
