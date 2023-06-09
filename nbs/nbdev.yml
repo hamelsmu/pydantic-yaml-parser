@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "pydantic-yaml-parser"
+  site-url: "https://hamelsmu.github.io/pydantic-yaml-parser"
+  description: "parse yaml files with pydantic"
+  repo-branch: main
+  repo-url: "https://github.com/hamelsmu/pydantic-yaml-parser"
