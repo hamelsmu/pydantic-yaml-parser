@@ -51,16 +51,8 @@ so:
 ``` python
 import yaml
 yml_dict = yaml.safe_load(yaml_string)
-yml_dict
-```
 
-    {'setting_1': 'Hello',
-     'setting_2': [{'kind': 'name', 'sublist': ['first', 'second']}]}
-
-To load this dict into the pydantic model `Test`, you can use
-`parse_obj`:
-
-``` python
+# use `parse_obj` to load a dict
 Test.parse_obj(yml_dict)
 ```
 
