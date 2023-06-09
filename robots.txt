@@ -1,0 +1,1 @@
+Sitemap: https://hamelsmu.github.io/pydantic-yaml-parser/sitemap.xml

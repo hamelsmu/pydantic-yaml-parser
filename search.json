@@ -1,0 +1,37 @@
+[
+  {
+    "objectID": "yaml.html",
+    "href": "yaml.html",
+    "title": "yaml",
+    "section": "",
+    "text": "yaml_string =\"\"\"\nquartodoc:\n  style: pkgdown\n  dir: api\n  package: quartodoc\n  sidebar: \"api/_sidebar.yml\"\n  sections:\n    - title: Preperation Functions\n      desc: |\n        These functions fetch and analyze python objects, including parsing docstrings.\n        They prepare a basic representation of your doc site that can be rendered and built.\n      contents:\n        - Auto\n        - blueprint\n        - collect\n        - get_object\n        - preview\n\"\"\"\nsource"
+  },
+  {
+    "objectID": "yaml.html#error-validation",
+    "href": "yaml.html#error-validation",
+    "title": "yaml",
+    "section": "Error Validation",
+    "text": "Error Validation\n\nMissing Section\nIn the below yaml, there are two things missing:\n\nThe contents field is missing from sections.\nThe root of the quartodoc config is missing a dir field.\n\n\ninvalid_section = \"\"\"\nquartodoc:\n  style: pkgdown\n  package: quartodoc\n  sidebar: \"api/_sidebar.yml\"\n  sections:\n    - title: Preperation Functions\n      desc: |\n        These functions fetch and analyze python objects, including parsing docstrings.\n        They prepare a basic representation of your doc site that can be rendered and built.\n\"\"\"\n\nyaml_dict = yaml2d(invalid_section)['quartodoc']\n\nIf we try to load the yaml in invalid_section we get the following error message:\n\nQuartoDoc.from_dict(yaml_dict)\n\nValueError: Configuration error(s) for YAML:\n - Missing field from root level: `dir`\n - Missing field `contents` for element 0 in the list for `sections`\n\n\n\n\nInvalid Type\nIn the below yaml we will erroneously set the contents field to false, when it is supposed to be a list:\n\nyaml_string =\"\"\"\nquartodoc:\n  style: pkgdown\n  dir: api\n  package: quartodoc\n  sidebar: \"api/_sidebar.yml\"\n  sections:\n    - title: Preperation Functions\n      desc: |\n        These functions fetch and analyze python objects, including parsing docstrings.\n        They prepare a basic representation of your doc site that can be rendered and built.\n      contents: false\n\"\"\"\n\nyaml_dict = yaml2d(yaml_string)['quartodoc']\n\nWe get the following human readable error message:\n\nyml = QuartoDoc.from_dict(yaml_dict)\n\nValueError: Configuration error(s) for YAML:\n - value is not a valid list: `contents` for element 0 in the list for `sections`\n\n\nIn the below yaml we errenously set dir to a list when it should be a str:\n\nyaml_string =\"\"\"\nquartodoc:\n  style: pkgdown\n  dir:\n      - folder1\n      - folder2\n  package: quartodoc\n  sidebar: \"api/_sidebar.yml\"\n  sections:\n    - title: Preperation Functions\n      desc: |\n        These functions fetch and analyze python objects, including parsing docstrings.\n        They prepare a basic representation of your doc site that can be rendered and built.\n      contents:\n          - item 1\n          - item 2\n\"\"\"\n\nyaml_dict = yaml2d(yaml_string)['quartodoc']\n\n\nyml = QuartoDoc.from_dict(yaml_dict)\n\nValueError: Configuration error(s) for YAML:\n - str type expected: from root level: `dir`"
+  },
+  {
+    "objectID": "index.html#install",
+    "href": "index.html#install",
+    "title": "pydantic-yaml-parser",
+    "section": "Install",
+    "text": "Install\npip install pydantic_yaml_parser"
+  },
+  {
+    "objectID": "index.html#background-usage",
+    "href": "index.html#background-usage",
+    "title": "pydantic-yaml-parser",
+    "section": "Background & Usage",
+    "text": "Background & Usage\n\n1. Loading YAML into Pydantic models\nTo load YAML into a Pydantic model, you have to first convert the YAML string to a dict. For example, given the below yaml file:\n\nyaml_string=\"\"\"\nsetting_1: Hello\nsetting_2:\n    - kind: name\n      sublist:\n          - first\n          - second\n\"\"\"\n\nYou might define a Pydantic model to represent it like this:\n\nfrom pydantic import BaseModel\nfrom typing import List\n\nclass Setting2(BaseModel):\n    kind: str\n    sublist: List\n\nclass Test(BaseModel):\n    setting_1: str\n    setting_2: List[Setting2]\n\nYou can load the yaml file into a dict, and into the Pydantic model like so using pyyaml:\n\nimport yaml\nyml_dict = yaml.safe_load(yaml_string)\n\n# use `parse_obj` to load a dict\nTest.parse_obj(yml_dict)\n\nTest(setting_1='Hello', setting_2=[Setting2(kind='name', sublist=['first', 'second'])])\n\n\n\n\n2. The Pydantic validation error message\nHowever, let’s say there is an error in your yaml file such that you accidentally set sublist to false, instead of setting sublist to list type, you will get an error message that looks like this:\n\nyaml_string=\"\"\"\nsetting_1: ok\nsetting_2:\n    - kind: name\n      sublist: false\n\"\"\"\nyaml_dict_error = yaml.safe_load(yaml_string)\n\n\nTest.parse_obj(yaml_dict_error)\n\nValidationError: 1 validation error for Test\nsetting_2 -&gt; 0 -&gt; sublist\n  value is not a valid list (type=type_error.list)\n\n\nThis error message is a bit confusing, especially for those with no prior experience with pydantic!\n\n\n3. Human readable error messages with pydantic_yaml_parser\nWhen you use pydantic_yaml_parser you get an error message that is much clearer:\n\nfrom pydantic_yaml_parser.yaml import YamlModel\n\nclass Test(YamlModel):\n    setting_1: str\n    setting_2: List[Setting2]\n\n\nTest.from_dict(yaml_dict_error)\n\nValueError: Configuration error(s) for YAML:\n - value is not a valid list: `sublist` for element 0 in the list for `setting_2`"
+  },
+  {
+    "objectID": "index.html#further-reading",
+    "href": "index.html#further-reading",
+    "title": "pydantic-yaml-parser",
+    "section": "Further Reading",
+    "text": "Further Reading\nFor more examples of error validation see these docs."
+  }
+]
